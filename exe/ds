@@ -1,17 +1,104 @@
 #!/usr/bin/env ruby
 
-require 'optparse'
-require 'methadone'
-require 'double/space.rb'
+require "optparse"
+require "methadone"
+require "json"
+require "fileutils"
+require "pathname"
+require "double/space.rb"
 
 class App
   include Methadone::Main
   include Methadone::CLILogging
 
-  main do
+  def self.split_array(array, string)
+    resulting_arrays = []
+    current_array = []
+    array.each do |element|
+      if element == string
+        resulting_arrays << current_array
+        current_array = []
+      else
+        current_array << element
+      end
+    end
+    if current_array != []
+      resulting_arrays << current_array
+    end
+    resulting_arrays
   end
 
-  on("--[no]-clean", "Produce a clean HTML version with no notes or metadata")
+
+  main do
+    if File.exist?("story.json")
+      clean = options["clean"]
+
+      json_contents = JSON.parse(File.read("story.json"))
+      title = json_contents["story"]["story-info"]["title"]
+      File.open("story.html","w") do |file|
+        contents = File.read("act1/scene1.md").split(/\n/)
+        q_and_a, content, notes = split_array(contents, "----")
+        paragraphs = split_array(content,"")
+
+        file.puts "<h1>#{ title }</h1>"
+        unless clean
+          file.puts "<h2>Act 1</h2>"
+          file.puts "<h3>Scene 1</h3>"
+        end
+
+        unless clean
+          file.puts "<ul>"
+          q_and_a.each do |qa|
+            question,answer = qa.split(/\?/).map(&:strip)
+            file.puts "<li><strong>#{question}?</strong> #{answer}</li>"
+          end
+          file.puts "<ul>"
+        end
+
+        paragraphs.each do |paragraph|
+          file.puts "<p>#{paragraph.map(&:strip).join(" ")}</p>"
+        end
+
+        unless clean
+          file.puts "<ul>"
+          notes.map(&:strip).each do |note|
+            file.puts "<li>#{note}</li>"
+          end
+          file.puts "</ul>"
+        end
+      end
+    else
+      puts "Initializing project..."
+
+      initial_config = {
+        "story" => {
+          "contact-info" => {
+            "name"         => "«name for contact/payment»",
+            "address"      => "«address for contact/payment»",
+            "phone-number" => "«phone number for contact/payment»",
+            "email"        => "«email for contact/payment»",
+          },
+          "story-info" => {
+            "title"    => "«title of your story»",
+            "author"   => "«author of your story»",
+            "keywords" => "«a scant few keywords for the header pages in the manuscript»",
+          }
+        }
+      }
+      File.open("story.json", "w") do |file|
+        file.puts initial_config.to_json
+      end
+
+      template_dir = Pathname(__FILE__).dirname / ".." / "templates"
+      FileUtils.mkdir "act1"
+      FileUtils.cp template_dir / "scene.md", "act1/scene1.md"
+
+      puts "New project setup.  Get writing!"
+      puts "Re-run `ds` to generate your story"
+    end
+  end
+
+  on("--[no-]clean", "Produce a clean HTML version with no notes or metadata")
   on("--manuscript", "Produce a .docx file that contains a hopefully properly formatted manuscript you can submit")
   on("--real-italics", "Use real italics in the manuscript and not underlines")
 

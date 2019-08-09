@@ -18,7 +18,9 @@ Your project has a folder.  At the top of that folder is a file called story.jso
     "contact-info": {
       "name": "Phillip Dick",
       "surname": "Dick",
-      "address": "123 Any St\nWashington, DC\n20002"
+      "address": "123 Any St\nWashington, DC\n20002",
+      "phone-number": "202-555-1211",
+      "email": "phillbaby@dickempire.info"
     },
     "story-info": {
       "title": "We Can Remember That For You Wholesale",

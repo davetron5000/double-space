@@ -1,0 +1,16 @@
+Who wants what from whom?
+What happens if they don't get it?
+Why now?
+----
+It was a dark and stormy night; the rain fell in torrents — except at
+occasional intervals, when it was checked by a violent gust of wind which
+swept up the streets (for it is in *London* that our scene lies),
+rattling along the housetops, and fiercely agitating the scanty flame
+of the lamps that struggled against the darkness.
+
+Through one of the obscurest quarters of London, and among haunts little
+loved by the gentlemen of the police, a man evidently of the lowest orders
+was wending his solitary way.
+----
+We are in London
+Dude is walking near a police hangout

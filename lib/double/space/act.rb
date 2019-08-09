@@ -8,8 +8,16 @@ class Double::Space::Act
   attr_reader :dir, :number
 
   def initialize(dir)
-    @dir = Pathname(dir)
+    @dir    = Pathname(dir)
     @number = dir.to_s.gsub(/^.*act/,"").to_i
+
+    if ! @dir.exist?
+      raise "#{@dir} does not exist"
+    end
+
+    if @number <= 0
+      raise "Act numbers must be positive. #{@dir.realpath} was parsed as #{@number}"
+    end
   end
 
   def <=>(other_act)

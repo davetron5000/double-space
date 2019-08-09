@@ -1,0 +1,15 @@
+{
+  "lib/double/space/*.rb": {
+    "alternate": "spec/unit/{}_spec.rb",
+    "type": "source"
+  },
+  "spec/unit/*_spec.rb": {
+    "alternate": "lib/double/space/{}.rb",
+    "type": "test",
+    "template": [
+      "require \"spec_helper\"\n",
+      "RSpec.describe \"{ camelcase | capitalize }\" do",
+      "end"
+    ]
+  }
+}

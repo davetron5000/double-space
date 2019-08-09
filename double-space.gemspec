@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.license       = "APACHE"
   spec.version       = Double::Space::VERSION
   spec.authors       = ["Dave Copeland"]
-  spec.email         = ["david.copeland@livingsocial.com"]
+  spec.email         = ["davetron5000@gmail.com"]
 
   spec.summary       = %q{Manage a short story and create both human readable output and a manuscript suitable for submissions}
   spec.description   = %q{}

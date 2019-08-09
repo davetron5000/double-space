@@ -44,12 +44,26 @@ class Double::Space::Paragraph
               }
             end
           else
-            current_piece[:characters] << char
+            current_piece[:characters] << asciify(char)
           end
         }
       end
       if ! current_piece[:characters].empty?
         @pieces << current_piece
+      end
+    end
+
+    def asciify(char)
+      case char
+      when "–" then "-"
+      when "—" then "--"
+      when "“" then '"'
+      when "”" then '"'
+      when "‘" then "'"
+      when "’" then "'"
+      when "…" then "..."
+      else
+        char
       end
     end
 

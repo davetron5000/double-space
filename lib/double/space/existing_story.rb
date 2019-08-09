@@ -57,13 +57,17 @@ class Double::Space::ExistingStory < Double::Space::Story
   end
 
   def contact
+    contact_info = json_contents["story"]["contact-info"]
+    surname =  contact_info["surname"] ||
+      contact_info["name"].split(/\s+/)[-1]
+
     OpenStruct.new(
-      name: json_contents["story"]["contact-info"]["name"],
-      surname: json_contents["story"]["contact-info"]["name"].split(/\s+/)[-1],
-      street: json_contents["story"]["contact-info"]["address"].split(/\n+/)[0],
-      city_state_zip: json_contents["story"]["contact-info"]["address"].split(/\n+/)[1],
-      email: json_contents["story"]["contact-info"]["email"],
-      phone: json_contents["story"]["contact-info"]["phone-number"],
+      name: contact_info["name"],
+      surname: surname,
+      street: contact_info["address"].split(/\n+/)[0],
+      city_state_zip: contact_info["address"].split(/\n+/)[1],
+      email: contact_info["email"],
+      phone: contact_info["phone-number"],
     )
   end
 

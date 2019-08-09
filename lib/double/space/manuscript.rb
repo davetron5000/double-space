@@ -10,14 +10,14 @@ class Double::Space::Manuscript
 
   def generate(file, italics:)
     file = Pathname(".") / file
-    real_italics = italics
     FileUtils.touch file
     file = file.realpath
+
+    real_italics = italics
     docx_file_templates_dir = @template_repository.path_to_template("manuscript.docx").realpath
     story = @story
     contact = story.contact
-    tmpdir = Dir.mktmpdir# do |tmpdir|
-    puts tmpdir
+    Dir.mktmpdir do |tmpdir|
       FileUtils.chdir tmpdir do
         Dir.glob("#{docx_file_templates_dir}/**/*", File::FNM_DOTMATCH).each do |file_or_dir|
           relative_path = file_or_dir.gsub(/#{Regexp.escape(docx_file_templates_dir.to_s)}\//,"")
@@ -38,18 +38,11 @@ class Double::Space::Manuscript
             end
           end
         end
-        if system("rm #{file} ; zip -r #{file} *")
-          puts "File is waiting in #{file.realpath}"
+        if system("rm -f #{file} ; zip -r #{file} *")
         else
-          puts "Somethign borkedn"
+          puts "Problem zipping up docx file"
         end
       end
-    #end
-  end
-
-private
-
-  def template_name
-    "story.html.erb"
+    end
   end
 end

@@ -1,0 +1,15 @@
+{
+  "story": {
+    "contact-info": {
+      "name": "«name for contact/payment»",
+      "address": "«address for contact/payment»",
+      "phone-number": "«phone number for contact/payment»",
+      "email": "«email for contact/payment»"
+    },
+    "story-info": {
+      "title": "«title of your story»",
+      "author": "«author of your story»",
+      "keywords": "«a scant few keywords for the header pages in the manuscript»"
+    }
+  }
+}

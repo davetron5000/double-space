@@ -17,7 +17,7 @@ class Double::Space::ExistingStory < Double::Space::Story
     end
 
     FileUtils.mkdir_p act_dir
-    FileUtils.cp Double::Space::TemplateRepository.new.path_to_template("scene.md"), scene_file
+    FileUtils.cp @template_repository.path_to_template("scene.md"), scene_file
   end
 
   def title
@@ -27,9 +27,9 @@ class Double::Space::ExistingStory < Double::Space::Story
 
   def formatted(annotations: )
     if annotations
-      Double::Space::HtmlFormattedWithAnnotationsStory.new(self)
+      Double::Space::HtmlFormattedWithAnnotationsStory.new(self, @template_repository)
     else
-      Double::Space::HtmlFormattedStory.new(self)
+      Double::Space::HtmlFormattedStory.new(self, @template_repository)
     end
   end
 

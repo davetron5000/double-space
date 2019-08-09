@@ -1,14 +1,13 @@
 require "erb"
 
-require_relative "template_repository"
-
 class Double::Space::HtmlFormattedStory
-  def initialize(story)
+  def initialize(story, template_repository)
     @story = story
+    @template_repository = template_repository
   end
 
   def generate(file)
-    erb_template = ERB.new(File.read(Double::Space::TemplateRepository.new.path_to_template(template_name)))
+    erb_template = ERB.new(File.read(@template_repository.path_to_template(template_name)))
 
     File.open("story.html","w") do |file|
       file.puts erb_template.result(binding)

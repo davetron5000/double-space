@@ -9,27 +9,14 @@ class Double::Space::NewStory < Double::Space::Story
   end
 
   def create!
-    initial_config = {
-      "story" => {
-        "contact-info" => {
-          "name"         => "«name for contact/payment»",
-          "address"      => "«address for contact/payment»",
-          "phone-number" => "«phone number for contact/payment»",
-          "email"        => "«email for contact/payment»",
-        },
-        "story-info" => {
-          "title"    => "«title of your story»",
-          "author"   => "«author of your story»",
-          "keywords" => "«a scant few keywords for the header pages in the manuscript»",
-        }
-      }
-    }
-    File.open(@story_file, "w") do |file|
-      file.puts JSON.pretty_generate(initial_config)
+    if File.exist?(@story_file)
+      raise "Cannot create new story: #{@story_file} exists"
     end
 
-    FileUtils.mkdir "act1"
-    FileUtils.cp Double::Space::TemplateRepository.new.path_to_template("scene.md"), "act1/scene1.md"
+    act_dir = story_dir / "act1"
+    FileUtils.cp @template_repository.path_to_template("story.json"), @story_file
+    FileUtils.mkdir act_dir
+    FileUtils.cp @template_repository.path_to_template("scene.md"), act_dir / "scene1.md"
   end
 end
 

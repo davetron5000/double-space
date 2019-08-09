@@ -8,7 +8,7 @@
     "type": "test",
     "template": [
       "require \"spec_helper\"\n",
-      "RSpec.describe \"{ camelcase | capitalize }\" do",
+      "RSpec.describe Double::Space::{camelcase|capitalize} do",
       "end"
     ]
   }

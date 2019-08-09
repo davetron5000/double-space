@@ -16,6 +16,7 @@ module Double
 
       def initialize(story_file, template_repository)
         @story_file = Pathname(story_file)
+        @story_dir = @story_file.dirname.realpath
         @template_repository = template_repository
       end
 
@@ -23,7 +24,7 @@ module Double
     private
 
       def story_dir
-        @story_file.dirname
+        @story_dir
       end
 
     end

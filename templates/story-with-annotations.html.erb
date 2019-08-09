@@ -8,7 +8,8 @@
   </head>
   <body class="bg-light-gray dark-gray baskerville">
     <header class="tc">
-      <h1 class="avenir"><%= @story.title %></h1>
+      <h1 class="avenir mb0"><%= @story.title %></h1>
+      <h2 class="f4 avenir normal mt0 fw3">About <%= @story.word_count_rounded %> words</h2>
     </header>
     <main>
       <% @story.acts.each do |act| %>

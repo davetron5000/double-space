@@ -23,7 +23,10 @@ class Double::Space::Scene
 
     @paragraphs = split_array(content,"").map { |array_of_lines|
       Double::Space::Paragraph.new(array_of_lines)
-    }.reject(&BLANK)
+    }.reject { |paragraph|
+      paragraph.to_s.strip == ""
+    }
+
 
     @notes = notes.map(&:strip).reject(&BLANK)
   end

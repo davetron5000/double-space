@@ -23,9 +23,14 @@ class App
       elsif options["act"] || options["scene"]
         exit_now! "You must specify both --act and --scene or neither"
       else
-        clean = options["clean"]
-        formatted_story = story.formatted(annotations: !options["clean"])
-        formatted_story.generate("story.hml")
+        if options["manuscript"]
+          manuscript = story.manuscript
+          manuscript.generate("story.docx", italics: options["real-italics"])
+        else
+          clean = options["clean"]
+          formatted_story = story.formatted(annotations: !options["clean"])
+          formatted_story.generate("story.hml")
+        end
       end
     else
       puts "Initializing project..."

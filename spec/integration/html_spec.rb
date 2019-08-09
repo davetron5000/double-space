@@ -89,6 +89,7 @@ RSpec.describe "Generate HTML with annotations" do
       end
     end
 
+    run_app("ds -a2 -s1")
 
     run_app("ds")
 
@@ -109,6 +110,8 @@ RSpec.describe "Generate HTML with annotations" do
 
       expect(contents.join("\n")).to include(%{We Can Remember That For You Wholesale})
       expect(contents.join("\n")).to include(%{Act 1})
+      expect(contents.join("\n")).to include(%{Scene 1})
+      expect(contents.join("\n")).to include(%{Act 2})
       expect(contents.join("\n")).to include(%{Scene 1})
     end
   end

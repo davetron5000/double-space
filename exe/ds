@@ -37,7 +37,7 @@ class App
       title = json_contents["story"]["story-info"]["title"]
       File.open("story.html","w") do |file|
         contents = File.read("act1/scene1.md").split(/\n/)
-        q_and_a, content, notes = split_array(contents, "----")
+        q_and_a, content, notes = split_array(contents, "%%%%")
         paragraphs = split_array(content,"")
 
         file.puts "<h1>#{ title }</h1>"

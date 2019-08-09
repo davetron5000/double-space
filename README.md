@@ -46,7 +46,21 @@ The structure of the scene files is pretty basic:
 No other formatting is permitted.  The contents of the file also have front matter and back matter.  The front
 matter is a series of questions and answers about the scene that can be useful for making sure the scene is
 accomplishing what you want.  The back-matter is a series of notes representing what the reader has learned by the
-end of this scene.
+end of this scene.  The front and back matter is delimited by a single line of four percent signs, so your file
+might look like this:
+
+```
+Who wants what from whom? Vick needs Shane to back off
+What happens if they don't get it? Vick's plansn will be uncovered by Aceveda
+Why now? Shane is reaching a breaking point
+%%%%
+"Shane, I need you to back off," said Vick.
+
+"I can't do that, chief," said Shane, "I've got too much to lose."
+%%%%
+Shane refuses to back off
+Shane has a lot to lose
+```
 
 To render the entire store us `ds`.  `ds` has three main modes:
 
@@ -62,3 +76,5 @@ To render the entire store us `ds`.  `ds` has three main modes:
     - ellipsis are replaced by three periods
     - a period followed by more that one space is replaced by a period followed by a single space
   - `ds` will fail if there are any spelling errors
+* `ds` in a fresh directory will create the necessary boilerplate to start a new project
+* `ds -a 2 -s 3` will create `act2/scene3.md` using the internal template

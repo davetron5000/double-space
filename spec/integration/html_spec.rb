@@ -45,7 +45,7 @@ RSpec.describe "Generate HTML with annotations" do
       expect(lines[0]).to  eq("Who wants what from whom?")
       expect(lines[1]).to  eq("What happens if they don't get it?")
       expect(lines[2]).to  eq("Why now?")
-      expect(lines[3]).to  eq("----")
+      expect(lines[3]).to  eq("%%%%")
       expect(lines[4]).to  eq("It was a dark and stormy night; the rain fell in torrents — except at")
       expect(lines[5]).to  eq("occasional intervals, when it was checked by a violent gust of wind which")
       expect(lines[6]).to  eq("swept up the streets (for it is in *London* that our scene lies),")
@@ -55,7 +55,7 @@ RSpec.describe "Generate HTML with annotations" do
       expect(lines[10]).to eq("Through one of the obscurest quarters of London, and among haunts little")
       expect(lines[11]).to eq("loved by the gentlemen of the police, a man evidently of the lowest orders")
       expect(lines[12]).to eq("was wending his solitary way.")
-      expect(lines[13]).to eq("----")
+      expect(lines[13]).to eq("%%%%")
       expect(lines[14]).to eq("We are in London")
       expect(lines[15]).to eq("Dude is walking near a police hangout")
     end

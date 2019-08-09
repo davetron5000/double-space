@@ -1,0 +1,21 @@
+<h1><%= @story.title %></h1>
+<% @story.acts.each do |act| %>
+  <% act.scenes.each do |scene| %>
+    <h2>Act <%= act.number %></h2>
+    <h3>Scene <%= scene.number %></h3>
+    <ul>
+      <% scene.q_and_a.each do |q_and_a| %>
+        <li><strong><%= q_and_a.question %>?</strong> <%= q_and_a.answer %></li>
+      <% end %>
+    </ul>
+    <% scene.paragraphs.each do |paragraph| %>
+      <p><%= paragraph %></p>
+    <% end %>
+    <ul>
+      <% scene.notes.each do |note| %>
+        <li><%= note %></li>
+      <% end %>
+    </ul>
+    <hr>
+  <% end %>
+<% end %>

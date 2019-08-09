@@ -5,6 +5,18 @@ require "json"
 
 require_relative "support"
 
+RSpec::Matchers.define :include_line_containing do |content|
+  matcher = ->(line) { line.include?(content) }
+
+  match do |lines|
+    lines.select(&matcher).size > 0
+  end
+  failure_message do |lines|
+    "Expected to find a line containing '#{content}' in:\n#{lines.join("\n")}"
+  end
+end
+
+
 RSpec.describe "Generate HTML with annotations" do
   include Integration::Support
   include FileUtils
@@ -100,19 +112,19 @@ RSpec.describe "Generate HTML with annotations" do
 
       contents = File.read("story.html").split(/\n/)
 
-      expect(contents).to include(%{<p>It was a dark and stormy night; the rain fell in torrents — except at occasional intervals, when it was checked by a violent gust of wind which swept up the streets (for it is in *London* that our scene lies), rattling along the housetops, and fiercely agitating the scanty flame of the lamps that struggled against the darkness.</p>})
-      expect(contents).to include(%{<p>Through one of the obscurest quarters of London, and among haunts little loved by the gentlemen of the police, a man evidently of the lowest orders was wending his solitary way.</p>})
-      expect(contents).to include(%{<li><strong>Who wants what from whom?</strong> Guy walking wants to find the cops</li>})
-      expect(contents).to include(%{<li><strong>What happens if they don't get it?</strong> Some bad shit will go down</li>})
-      expect(contents).to include(%{<li><strong>Why now?</strong> They are being pursued</li>})
-      expect(contents).to include(%{<li>We are in London</li>})
-      expect(contents).to include(%{<li>Dude is walking near a police hangout</li>})
+      expect(contents).to include_line_containing(%{<p>It was a dark and stormy night; the rain fell in torrents — except at occasional intervals, when it was checked by a violent gust of wind which swept up the streets (for it is in *London* that our scene lies), rattling along the housetops, and fiercely agitating the scanty flame of the lamps that struggled against the darkness.</p>})
+      expect(contents).to include_line_containing(%{<p>Through one of the obscurest quarters of London, and among haunts little loved by the gentlemen of the police, a man evidently of the lowest orders was wending his solitary way.</p>})
+      expect(contents).to include_line_containing(%{<li><strong>Who wants what from whom?</strong> Guy walking wants to find the cops</li>})
+      expect(contents).to include_line_containing(%{<li><strong>What happens if they don't get it?</strong> Some bad shit will go down</li>})
+      expect(contents).to include_line_containing(%{<li><strong>Why now?</strong> They are being pursued</li>})
+      expect(contents).to include_line_containing(%{<li>We are in London</li>})
+      expect(contents).to include_line_containing(%{<li>Dude is walking near a police hangout</li>})
 
-      expect(contents.join("\n")).to include(%{We Can Remember That For You Wholesale})
-      expect(contents.join("\n")).to include(%{Act 1})
-      expect(contents.join("\n")).to include(%{Scene 1})
-      expect(contents.join("\n")).to include(%{Act 2})
-      expect(contents.join("\n")).to include(%{Scene 1})
+      expect(contents).to include_line_containing(%{We Can Remember That For You Wholesale})
+      expect(contents).to include_line_containing(%{Act 1})
+      expect(contents).to include_line_containing(%{Scene 1})
+      expect(contents).to include_line_containing(%{Act 2})
+      expect(contents).to include_line_containing(%{Scene 1})
     end
   end
 
@@ -154,17 +166,17 @@ RSpec.describe "Generate HTML with annotations" do
 
       contents = File.read("story.html").split(/\n/)
 
-      expect(contents).to include(%{<p>It was a dark and stormy night; the rain fell in torrents — except at occasional intervals, when it was checked by a violent gust of wind which swept up the streets (for it is in *London* that our scene lies), rattling along the housetops, and fiercely agitating the scanty flame of the lamps that struggled against the darkness.</p>})
-      expect(contents).to include(%{<p>Through one of the obscurest quarters of London, and among haunts little loved by the gentlemen of the police, a man evidently of the lowest orders was wending his solitary way.</p>})
-      expect(contents).not_to include(%{<li><strong>Who wants what from whom?</strong> Guy walking wants to find the cops</li>})
-      expect(contents).not_to include(%{<li><strong>What happens if they don't get it?</strong> Some bad shit will go down</li>})
-      expect(contents).not_to include(%{<li><strong>Why now?</strong> They are being pursued</li>})
-      expect(contents).not_to include(%{<li>We are in London</li>})
-      expect(contents).not_to include(%{<li>Dude is walking near a police hangout</li>})
+      expect(contents).to include_line_containing(%{<p>It was a dark and stormy night; the rain fell in torrents — except at occasional intervals, when it was checked by a violent gust of wind which swept up the streets (for it is in *London* that our scene lies), rattling along the housetops, and fiercely agitating the scanty flame of the lamps that struggled against the darkness.</p>})
+      expect(contents).to include_line_containing(%{<p>Through one of the obscurest quarters of London, and among haunts little loved by the gentlemen of the police, a man evidently of the lowest orders was wending his solitary way.</p>})
+      expect(contents).not_to include_line_containing(%{<li><strong>Who wants what from whom?</strong> Guy walking wants to find the cops</li>})
+      expect(contents).not_to include_line_containing(%{<li><strong>What happens if they don't get it?</strong> Some bad shit will go down</li>})
+      expect(contents).not_to include_line_containing(%{<li><strong>Why now?</strong> They are being pursued</li>})
+      expect(contents).not_to include_line_containing(%{<li>We are in London</li>})
+      expect(contents).not_to include_line_containing(%{<li>Dude is walking near a police hangout</li>})
 
-      expect(contents.join("\n")).to include(%{We Can Remember That For You Wholesale})
-      expect(contents.join("\n")).not_to include(%{Act 1})
-      expect(contents.join("\n")).not_to include(%{Scene 1})
+      expect(contents).to include_line_containing(%{We Can Remember That For You Wholesale})
+      expect(contents).not_to include_line_containing(%{Act 1})
+      expect(contents).not_to include_line_containing(%{Scene 1})
     end
   end
 end

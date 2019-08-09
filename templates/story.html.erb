@@ -1,0 +1,9 @@
+<h1><%= @story.title %></h1>
+<% @story.acts.each do |act| %>
+  <% act.scenes.each do |scene| %>
+    <% scene.paragraphs.each do |paragraph| %>
+      <p><%= paragraph %></p>
+    <% end %>
+    <hr>
+  <% end %>
+<% end %>

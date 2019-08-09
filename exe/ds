@@ -46,6 +46,7 @@ class App
   use_log_level_option :toggle_debug_on_signal => 'USR1'
 
   description "Write and submit your amazing short story"
+  leak_exceptions true
 
   go!
 end

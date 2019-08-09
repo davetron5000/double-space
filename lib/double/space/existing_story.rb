@@ -10,14 +10,14 @@ class Double::Space::ExistingStory < Double::Space::Story
 
   def new_scene!(act, scene)
     act_dir = "act#{act}"
-    scene_file = Pathname(act_dir) / "scene#{scene}.md"
+    scene_file = Pathname(act_dir) / "scene#{scene}.txt"
 
     if scene_file.exist?
-      exit_now! "#{scene_file} already exists. Not overwriting"
+      raise "#{scene_file} already exists. Not overwriting"
     end
 
     FileUtils.mkdir_p act_dir
-    FileUtils.cp @template_repository.path_to_template("scene.md"), scene_file
+    FileUtils.cp @template_repository.path_to_template("scene.txt"), scene_file
   end
 
   def title

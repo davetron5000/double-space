@@ -2,7 +2,7 @@
 <% @story.acts.each do |act| %>
   <% act.scenes.each do |scene| %>
     <% scene.paragraphs.each do |paragraph| %>
-      <p><%= paragraph %></p>
+      <p><%= paragraph.to_html %></p>
     <% end %>
     <hr>
   <% end %>

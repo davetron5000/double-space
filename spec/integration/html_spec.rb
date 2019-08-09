@@ -50,26 +50,27 @@ RSpec.describe "Generate HTML with annotations" do
       expect(story_json_contents["story"]["story-info"]["author"]).to eq("«author of your story»")
       expect(story_json_contents["story"]["story-info"]["keywords"]).to eq("«a scant few keywords for the header pages in the manuscript»")
 
-      expect(File.exist?("act1/scene1.md")).to eq(true)
+      expect(File.exist?("act1/scene1.txt")).to eq(true)
 
-      lines = File.read("act1/scene1.md").split(/\n/)
+      lines = File.read("act1/scene1.txt").split(/\n/)
 
-      expect(lines[0]).to  eq("Who wants what from whom?")
-      expect(lines[1]).to  eq("What happens if they don't get it?")
-      expect(lines[2]).to  eq("Why now?")
-      expect(lines[3]).to  eq("%%%%")
-      expect(lines[4]).to  eq("It was a dark and stormy night; the rain fell in torrents — except at")
-      expect(lines[5]).to  eq("occasional intervals, when it was checked by a violent gust of wind which")
-      expect(lines[6]).to  eq("swept up the streets (for it is in *London* that our scene lies),")
-      expect(lines[7]).to  eq("rattling along the housetops, and fiercely agitating the scanty flame")
-      expect(lines[8]).to  eq("of the lamps that struggled against the darkness.")
-      expect(lines[9]).to  eq("")
-      expect(lines[10]).to eq("Through one of the obscurest quarters of London, and among haunts little")
-      expect(lines[11]).to eq("loved by the gentlemen of the police, a man evidently of the lowest orders")
-      expect(lines[12]).to eq("was wending his solitary way.")
-      expect(lines[13]).to eq("%%%%")
-      expect(lines[14]).to eq("We are in London")
-      expect(lines[15]).to eq("Dude is walking near a police hangout")
+      expect(lines[0]).to  eq("«short description of what this scene is for»")
+      expect(lines[1]).to  eq("Who wants what from whom?")
+      expect(lines[2]).to  eq("What happens if they don't get it?")
+      expect(lines[3]).to  eq("Why now?")
+      expect(lines[4]).to  eq("%%%%")
+      expect(lines[5]).to  eq("It was a dark and stormy night; the rain fell in torrents — except at")
+      expect(lines[6]).to  eq("occasional intervals, when it was checked by a violent gust of wind which")
+      expect(lines[7]).to  eq("swept up the streets (for it is in *London* that our scene lies),")
+      expect(lines[8]).to  eq("rattling along the housetops, and fiercely agitating the scanty flame")
+      expect(lines[9]).to  eq("of the lamps that struggled against the darkness.")
+      expect(lines[10]).to  eq("")
+      expect(lines[11]).to eq("Through one of the obscurest quarters of London, and among haunts little")
+      expect(lines[12]).to eq("loved by the gentlemen of the police, a man evidently of the lowest orders")
+      expect(lines[13]).to eq("was wending his solitary way.")
+      expect(lines[14]).to eq("%%%%")
+      expect(lines[15]).to eq("We are in London")
+      expect(lines[16]).to eq("Dude is walking near a police hangout")
     end
   end
 
@@ -90,12 +91,13 @@ RSpec.describe "Generate HTML with annotations" do
       file.puts story_json_contents.to_json
     end
 
-    story = File.read("act1/scene1.md").split(/\n/)
-    story[0] = "Who wants what from whom? Guy walking wants to find the cops"
-    story[1] = "What happens if they don't get it? Some bad shit will go down"
-    story[2] = "Why now? They are being pursued"
+    story = File.read("act1/scene1.txt").split(/\n/)
+    story[0] = "Exposition"
+    story[1] = "Who wants what from whom? Guy walking wants to find the cops"
+    story[2] = "What happens if they don't get it? Some bad shit will go down"
+    story[3] = "Why now? They are being pursued"
 
-    File.open("act1/scene1.md","w") do |file|
+    File.open("act1/scene1.txt","w") do |file|
       story.each do |line|
         file.puts line
       end
@@ -112,8 +114,9 @@ RSpec.describe "Generate HTML with annotations" do
 
       contents = File.read("story.html").split(/\n/)
 
-      expect(contents).to include_line_containing(%{<p>It was a dark and stormy night; the rain fell in torrents — except at occasional intervals, when it was checked by a violent gust of wind which swept up the streets (for it is in *London* that our scene lies), rattling along the housetops, and fiercely agitating the scanty flame of the lamps that struggled against the darkness.</p>})
-      expect(contents).to include_line_containing(%{<p>Through one of the obscurest quarters of London, and among haunts little loved by the gentlemen of the police, a man evidently of the lowest orders was wending his solitary way.</p>})
+      expect(contents).to include_line_containing(%{Exposition})
+      expect(contents).to include_line_containing(%{>It was a dark and stormy night; the rain fell in torrents — except at occasional intervals, when it was checked by a violent gust of wind which swept up the streets (for it is in <em>London</em> that our scene lies), rattling along the housetops, and fiercely agitating the scanty flame of the lamps that struggled against the darkness.</p>})
+      expect(contents).to include_line_containing(%{>Through one of the obscurest quarters of London, and among haunts little loved by the gentlemen of the police, a man evidently of the lowest orders was wending his solitary way.</p>})
       expect(contents).to include_line_containing(%{<li><strong>Who wants what from whom?</strong> Guy walking wants to find the cops</li>})
       expect(contents).to include_line_containing(%{<li><strong>What happens if they don't get it?</strong> Some bad shit will go down</li>})
       expect(contents).to include_line_containing(%{<li><strong>Why now?</strong> They are being pursued</li>})
@@ -145,12 +148,13 @@ RSpec.describe "Generate HTML with annotations" do
       file.puts story_json_contents.to_json
     end
 
-    story = File.read("act1/scene1.md").split(/\n/)
-    story[0] = "Who wants what from whom? Guy walking wants to find the cops"
-    story[1] = "What happens if they don't get it? Some bad shit will go down"
-    story[2] = "Why now? They are being pursued"
+    story = File.read("act1/scene1.txt").split(/\n/)
+    story[0] = "Exposition"
+    story[1] = "Who wants what from whom? Guy walking wants to find the cops"
+    story[2] = "What happens if they don't get it? Some bad shit will go down"
+    story[3] = "Why now? They are being pursued"
 
-    File.open("act1/scene1.md","w") do |file|
+    File.open("act1/scene1.txt","w") do |file|
       story.each do |line|
         file.puts line
       end
@@ -166,8 +170,10 @@ RSpec.describe "Generate HTML with annotations" do
 
       contents = File.read("story.html").split(/\n/)
 
-      expect(contents).to include_line_containing(%{<p>It was a dark and stormy night; the rain fell in torrents — except at occasional intervals, when it was checked by a violent gust of wind which swept up the streets (for it is in *London* that our scene lies), rattling along the housetops, and fiercely agitating the scanty flame of the lamps that struggled against the darkness.</p>})
-      expect(contents).to include_line_containing(%{<p>Through one of the obscurest quarters of London, and among haunts little loved by the gentlemen of the police, a man evidently of the lowest orders was wending his solitary way.</p>})
+      expect(contents).not_to include_line_containing(%{Exposition})
+
+      expect(contents).to include_line_containing(%{>It was a dark and stormy night; the rain fell in torrents — except at occasional intervals, when it was checked by a violent gust of wind which swept up the streets (for it is in <em>London</em> that our scene lies), rattling along the housetops, and fiercely agitating the scanty flame of the lamps that struggled against the darkness.</p>})
+      expect(contents).to include_line_containing(%{>Through one of the obscurest quarters of London, and among haunts little loved by the gentlemen of the police, a man evidently of the lowest orders was wending his solitary way.</p>})
       expect(contents).not_to include_line_containing(%{<li><strong>Who wants what from whom?</strong> Guy walking wants to find the cops</li>})
       expect(contents).not_to include_line_containing(%{<li><strong>What happens if they don't get it?</strong> Some bad shit will go down</li>})
       expect(contents).not_to include_line_containing(%{<li><strong>Why now?</strong> They are being pursued</li>})

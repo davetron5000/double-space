@@ -25,7 +25,7 @@ class Double::Space::Act
   end
 
   def scenes
-    Dir["#{self.dir}/scene*.md"].select { |file|
+    Dir["#{self.dir}/scene*.txt"].select { |file|
       Double::Space::Scene.is_scene?(file)
     }.map { |file|
       Double::Space::Scene.new(file)

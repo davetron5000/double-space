@@ -1,21 +1,55 @@
-<h1><%= @story.title %></h1>
-<% @story.acts.each do |act| %>
-  <% act.scenes.each do |scene| %>
-    <h2>Act <%= act.number %></h2>
-    <h3>Scene <%= scene.number %></h3>
-    <ul>
-      <% scene.q_and_a.each do |q_and_a| %>
-        <li><strong><%= q_and_a.question %>?</strong> <%= q_and_a.answer %></li>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title><%= @story.title %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <link rel="stylesheet" href="https://unpkg.com/tachyons@4.10.0/css/tachyons.min.css"/>
+  </head>
+  <body class="bg-light-gray dark-gray baskerville">
+    <header class="tc">
+      <h1 class="avenir"><%= @story.title %></h1>
+    </header>
+    <main>
+      <% @story.acts.each do |act| %>
+        <section>
+          <% act.scenes.each_with_index do |scene,index| %>
+            <section class="cf">
+              <aside class="fl w-25 ph3">
+                <header class="gray avenir ma0">
+                  <h1 class="ma0 normal dib pv1 f4 ttu tracked near-black">Act <%= act.number %></h1>
+                  <h2 class="ma0 normal dib pv1 f6 ttu tracked strong near-black">Scene <%= scene.number %></h2>
+                  <h3 class="ma0 normal pv2 f4 blue"><%= scene.purpose %></h3>
+                </header>
+                <ul>
+                  <% scene.q_and_a.each do |q_and_a| %>
+                    <li><strong><%= q_and_a.question %>?</strong> <%= q_and_a.answer %></li>
+                  <% end %>
+                </ul>
+              </aside>
+              <div class="fl w-50 ph3 f4">
+                <% scene.paragraphs.each do |paragraph| %>
+                  <p class="lh-copy measure mt0"><%= paragraph.to_html %></p>
+                <% end %>
+              </div>
+              <div class="fl w-25 ph3 f6 blue avenir">
+                <ul>
+                  <% scene.notes.each do |note| %>
+                    <li><%= note %></li>
+                  <% end %>
+                </ul>
+              </div>
+            </section>
+            <div class="tc f3 mt2 mb4">
+              <% if index == (act.scenes.size-1) %>
+                END
+              <% else %>
+                §
+              <% end %>
+            </div>
+          <% end %>
+        </section>
       <% end %>
-    </ul>
-    <% scene.paragraphs.each do |paragraph| %>
-      <p><%= paragraph %></p>
-    <% end %>
-    <ul>
-      <% scene.notes.each do |note| %>
-        <li><%= note %></li>
-      <% end %>
-    </ul>
-    <hr>
-  <% end %>
-<% end %>
+    </main>
+  </body>
+</html>

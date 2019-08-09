@@ -34,7 +34,7 @@ Your project has a folder.  At the top of that folder is a file called story.jso
 If `story->contact-info->surname` is omitted, it is assumed to be last full word of `story->contact-info->name`.
 
 Your project has folder called `draft`. In that folder are one ore more directories named `actNN` where "NN" is a
-number.  Inside those directories are files named `sceneNN.md`.  These contain the story's scenes.  The entire
+number.  Inside those directories are files named `sceneNN.txt`.  These contain the story's scenes.  The entire
 thing is stiche together with act1, scene1, act1, scene2, act2 scene3, etc.  Any other files inside the folders
 are ignored.
 
@@ -44,12 +44,10 @@ The structure of the scene files is pretty basic:
 * a word or words surrounded by asterisks are considered italicized.
 
 No other formatting is permitted.  The contents of the file also have front matter and back matter.  The front
-matter is a series of questions and answers about the scene that can be useful for making sure the scene is
-accomplishing what you want.  The back-matter is a series of notes representing what the reader has learned by the
-end of this scene.  The front and back matter is delimited by a single line of four percent signs, so your file
-might look like this:
+matter is a purpose followed by a series of questions and answers about the scene that can be useful for making sure the scene is accomplishing what you want.  The back-matter is a series of notes representing what the reader has learned by the end of this scene.  The front and back matter is delimited by a single line of four percent signs, so your file might look like this:
 
 ```
+Inciting Incident
 Who wants what from whom? Vick needs Shane to back off
 What happens if they don't get it? Vick's plansn will be uncovered by Aceveda
 Why now? Shane is reaching a breaking point
@@ -77,4 +75,4 @@ To render the entire store us `ds`.  `ds` has three main modes:
     - a period followed by more that one space is replaced by a period followed by a single space
   - `ds` will fail if there are any spelling errors
 * `ds` in a fresh directory will create the necessary boilerplate to start a new project
-* `ds -a 2 -s 3` will create `act2/scene3.md` using the internal template
+* `ds -a 2 -s 3` will create `act2/scene3.txt` using the internal template

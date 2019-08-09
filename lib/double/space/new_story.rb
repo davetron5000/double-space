@@ -2,6 +2,7 @@ require "json"
 require "fileutils"
 
 require_relative "template_repository"
+require_relative "existing_story"
 
 class Double::Space::NewStory < Double::Space::Story
   def exists?
@@ -13,10 +14,10 @@ class Double::Space::NewStory < Double::Space::Story
       raise "Cannot create new story: #{@story_file} exists"
     end
 
-    act_dir = story_dir / "act1"
     FileUtils.cp @template_repository.path_to_template("story.json"), @story_file
-    FileUtils.mkdir act_dir
-    FileUtils.cp @template_repository.path_to_template("scene.md"), act_dir / "scene1.md"
+    Double::Space::ExistingStory.new(@story_file, @template_repository).tap { |existing_story|
+      existing_story.new_scene!(1,1)
+    }
   end
 end
 

@@ -154,6 +154,36 @@ RSpec.describe Double::Space::Scene do
       expect(scene.paragraphs.map(&:to_s)).to eq(["Here's where the story ends"])
       expect(scene.notes.size).to eq(1)
       expect(scene.notes[0]).to eq("the story is over")
+      expect(scene.break?).to eq(false)
+    end
+
+    it "understands if this is a true scene break" do
+      File.open("#{act}/scene2.txt","w") do |file|
+        file.puts "Inciting Incident"
+        file.puts "What do we want? Plot"
+        file.puts "When do we want it? "
+        file.puts ""
+        file.puts "%%%%"
+        file.puts "***"
+        file.puts "Here's where the story ends"
+        file.puts "%%%%"
+        file.puts "  the story is over  "
+        file.puts "  "
+      end
+      scene = described_class.new("#{act}/scene2.txt")
+
+      expect(scene.file.realpath).to eq(Pathname("#{act}/scene2.txt").realpath)
+      expect(scene.number).to eq(2)
+      expect(scene.purpose).to eq("Inciting Incident")
+      expect(scene.q_and_a.size).to eq(2)
+      expect(scene.q_and_a[0].question).to eq("What do we want")
+      expect(scene.q_and_a[0].answer).to eq("Plot")
+      expect(scene.q_and_a[1].question).to eq("When do we want it")
+      expect(scene.q_and_a[1].answer).to eq("")
+      expect(scene.paragraphs.map(&:to_s)).to eq(["Here's where the story ends"])
+      expect(scene.notes.size).to eq(1)
+      expect(scene.notes[0]).to eq("the story is over")
+      expect(scene.break?).to eq(true)
     end
 
     it "can parse multiple paragraphs" do

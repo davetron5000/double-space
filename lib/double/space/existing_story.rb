@@ -34,9 +34,7 @@ class Double::Space::ExistingStory < Double::Space::Story
                       count = 0
                       self.acts.each do |act|
                         act.scenes.each do |scene|
-                          scene.paragraphs.each do |paragraph|
-                            count += paragraph.to_s.split(/\s+/).size
-                          end
+                          count += scene.word_count
                         end
                       end
                       count

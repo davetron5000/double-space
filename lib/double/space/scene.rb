@@ -14,7 +14,7 @@ class Double::Space::Scene
 
     validate_file!
 
-    @purpose, q_and_a, content, notes = parse_file(@file)
+    @purpose, q_and_a, content, notes, @scene_break = parse_file(@file)
 
     @q_and_a = q_and_a.map(&:strip).reject(&BLANK).map { |one_question_and_answer|
       question, answer = one_question_and_answer.split(/\?/,2)
@@ -31,8 +31,16 @@ class Double::Space::Scene
     @notes = notes.map(&:strip).reject(&BLANK)
   end
 
+  def word_count
+    @paragraphs.map(&:word_count).reduce(&:+)
+  end
+
   def <=>(other_scene)
     self.number <=> other_scene.number
+  end
+
+  def break?
+    @scene_break
   end
 
 private
@@ -82,7 +90,14 @@ private
     elsif notes.nil?
       raise "@#{file} has ambiguous content.  Either remove all '#{DELIMITER}' or put two in (one at start one at end)"
     end
-    [ purpose, Array(q_and_a), Array(content), Array(notes) ]
+
+    scene_break = false
+    if content[0] == "***"
+      scene_break = true
+      content = content[1..-1]
+    end
+
+    [ purpose, Array(q_and_a), Array(content), Array(notes), scene_break ]
   end
 
   def split_array(array, string)

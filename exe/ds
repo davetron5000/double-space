@@ -26,10 +26,14 @@ class App
         if options["manuscript"]
           manuscript = story.manuscript
           manuscript.generate("story.docx", italics: options["real-italics"])
+          puts "Your manuscript is in story.docx"
         else
+          time = Time.now.to_f
           clean = options["clean"]
           formatted_story = story.formatted(annotations: !options["clean"])
           formatted_story.generate("story.hml")
+          generate_time = Time.now.to_f - time
+          puts "Your html is in story.html (generated in #{generate_time} seconds)"
         end
       end
     else

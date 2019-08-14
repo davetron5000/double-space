@@ -1,9 +1,42 @@
-<h1><%= @story.title %></h1>
-<% @story.acts.each do |act| %>
-  <% act.scenes.each do |scene| %>
-    <% scene.paragraphs.each do |paragraph| %>
-      <p><%= paragraph.to_html %></p>
-    <% end %>
-    <hr>
-  <% end %>
-<% end %>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title><%= @story.title %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <link rel="stylesheet" href="https://unpkg.com/tachyons@4.10.0/css/tachyons.min.css"/>
+  </head>
+  <body class="bg-light-gray dark-gray baskerville">
+    <header class="tc">
+      <h1 class="avenir mb0"><%= @story.title %></h1>
+      <h2 class="f4 avenir normal mt0 fw3">About <%= @story.word_count_rounded %> words</h2>
+    </header>
+    <main>
+      <% @story.acts.each do |act| %>
+        <section>
+          <% act.scenes.each_with_index do |scene,index| %>
+            <section class="cf">
+              <aside class="fl w-25 ph3">
+                &nbsp;
+              </aside>
+              <div class="fl w-50 ph3 f4">
+                <% scene.paragraphs.each do |paragraph| %>
+                  <p class="lh-copy measure mt0"><%= paragraph.to_html %></p>
+                <% end %>
+              </div>
+              <div class="fl w-25 ph3 f6 blue avenir">
+              </div>
+            </section>
+            <div class="tc f3 mt2 mb4">
+              <% if index == (act.scenes.size-1) %>
+                END
+              <% else %>
+                §
+              <% end %>
+            </div>
+          <% end %>
+        </section>
+      <% end %>
+    </main>
+  </body>
+</html>

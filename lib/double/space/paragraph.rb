@@ -11,6 +11,10 @@ class Double::Space::Paragraph
     to_s
   end
 
+  def word_count
+    to_s.split(/\s+/).size
+  end
+
   def to_html
     HtmlParagraph.new(@lines)
   end

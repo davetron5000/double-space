@@ -1,6 +1,5 @@
 require_relative "act"
 require_relative "html_formatted_story"
-require_relative "html_formatted_with_annotations_story"
 require_relative "manuscript"
 require "json"
 
@@ -70,11 +69,7 @@ class Double::Space::ExistingStory < Double::Space::Story
   end
 
   def formatted(annotations: )
-    if annotations
-      Double::Space::HtmlFormattedWithAnnotationsStory.new(self, @template_repository)
-    else
-      Double::Space::HtmlFormattedStory.new(self, @template_repository)
-    end
+    Double::Space::HtmlFormattedStory.new(self, @template_repository, show_annotations: annotations)
   end
 
   def manuscript

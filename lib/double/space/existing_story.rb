@@ -68,8 +68,12 @@ class Double::Space::ExistingStory < Double::Space::Story
     )
   end
 
-  def formatted(annotations: )
-    Double::Space::HtmlFormattedStory.new(self, @template_repository, show_annotations: annotations)
+  def formatted(annotations: , style: :good_typography)
+    if style == :good_typography
+      Double::Space::HtmlFormattedStory.new(self, @template_repository, show_annotations: annotations)
+    else
+      Double::Space::HtmlFormattedStory.new(self, @template_repository, show_annotations: false, template: "manuscript.html.erb")
+    end
   end
 
   def manuscript

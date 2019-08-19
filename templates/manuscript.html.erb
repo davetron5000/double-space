@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title><%= @story.title %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <style>
+    * {
+      font-family: courier;
+      font-size: 14px;
+    }
+    p {
+      text-indent: 2em;
+      line-height: 2;
+      width: 100%;
+    }
+    </style>
+  </head>
+  <body>
+    <header>
+      <p><%= @story.title %></p>
+      <p>About <%= @story.word_count_rounded %> words</p>
+    </header>
+    <main>
+      <div style="margin-left:auto;margin-right:auto;width:17in;">
+        <% @story.acts.each do |act| %>
+          <section>
+            <% act.scenes.each do |scene| %>
+              <div style="text-align: center">
+                <% if scene.break? %>
+                  #
+                <% end %>
+              </div>
+              <section>
+                <a name="act<%= act.number %>-scene<%= scene.number %>"></a>
+                <% scene.paragraphs.each do |paragraph| %>
+                  <p class="mt0 mb0"><%= paragraph.to_html %></p>
+                <% end %>
+                <div style="text-align: center">
+                  <% if (scene.number == act.scenes.size) && (act.number == @story.acts.size) %>
+                    END
+                  <% end %>
+                </div>
+              </section>
+            <% end %>
+          </section>
+        <% end %>
+      </div>
+    </main>
+  </body>
+</html>

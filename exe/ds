@@ -24,9 +24,15 @@ class App
         exit_now! "You must specify both --act and --scene or neither"
       else
         if options["manuscript"]
-          manuscript = story.manuscript
-          manuscript.generate("story.docx", italics: options["real-italics"])
-          puts "Your manuscript is in story.docx"
+          if options["html"]
+            formatted_story = story.formatted(annotations: false, style: :manuscript)
+            formatted_story.generate("story.hml")
+            puts "Your manuscript is in story.html"
+          else
+            manuscript = story.manuscript
+            manuscript.generate("story.docx", italics: options["real-italics"])
+            puts "Your manuscript is in story.docx"
+          end
         else
           time = Time.now.to_f
           clean = options["clean"]
@@ -46,6 +52,7 @@ class App
 
   on("--[no-]clean", "Produce a clean HTML version with no notes or metadata")
   on("--manuscript", "Produce a .docx file that contains a hopefully properly formatted manuscript you can submit")
+  on("--html", "Produce an HTML file that looks like a manuscript")
   on("--real-italics", "Use real italics in the manuscript and not underlines")
   on("-a ACT", "--act", "Create a new empty scene in act ACT", /^\d+$/)
   on("-s SCENE", "--scene", "Create a new empty scene in act ACT", /^\d+$/)

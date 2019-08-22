@@ -9,38 +9,46 @@
       font-family: courier;
       font-size: 14px;
     }
+    em {
+      font-style: normal;
+      text-decoration: underline;
+    }
     p {
       text-indent: 2em;
-      line-height: 2;
+      line-height: 2.2;
       width: 100%;
+      margin-bottom: 0;
+      margin-top: 0;
     }
     </style>
   </head>
   <body>
-    <header>
+    <header style="text-align: center; margin-bottom: 4in">
       <p><%= @story.title %></p>
+      <p>by</p>
+      <p><%= @story.author %></p>
       <p>About <%= @story.word_count_rounded %> words</p>
     </header>
     <main>
-      <div style="margin-left:auto;margin-right:auto;width:17in;">
+      <div style="margin-left:auto;margin-right:auto;width:8.5in;">
         <% @story.acts.each do |act| %>
           <section>
             <% act.scenes.each do |scene| %>
-              <div style="text-align: center">
+              <p style="text-align: center">
                 <% if scene.break? %>
                   #
                 <% end %>
-              </div>
+              </p>
               <section>
                 <a name="act<%= act.number %>-scene<%= scene.number %>"></a>
                 <% scene.paragraphs.each do |paragraph| %>
-                  <p class="mt0 mb0"><%= paragraph.to_html %></p>
+                  <p><%= paragraph.to_html(ascii: true) %></p>
                 <% end %>
-                <div style="text-align: center">
+                <p style="text-align: center">
                   <% if (scene.number == act.scenes.size) && (act.number == @story.acts.size) %>
                     END
                   <% end %>
-                </div>
+                </p>
               </section>
             <% end %>
           </section>

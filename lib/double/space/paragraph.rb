@@ -15,13 +15,28 @@ class Double::Space::Paragraph
     to_s.split(/\s+/).size
   end
 
-  def to_html
-    HtmlParagraph.new(@lines)
+  def to_html(ascii: false)
+    HtmlParagraph.new(@lines, ascii: ascii)
   end
 
   def to_msword(real_italics)
     MsWordParagraph.new(@lines, real_italics)
   end
+
+  def asciify(char)
+    case char
+    when "–" then "-"
+    when "—" then "--"
+    when "“" then '"'
+    when "”" then '"'
+    when "‘" then "'"
+    when "’" then "'"
+    when "…" then "..."
+    else
+      char
+    end
+  end
+
 
   class MsWordParagraph < Double::Space::Paragraph
     def initialize(lines, real_italics)
@@ -54,20 +69,6 @@ class Double::Space::Paragraph
       end
       if ! current_piece[:characters].empty?
         @pieces << current_piece
-      end
-    end
-
-    def asciify(char)
-      case char
-      when "–" then "-"
-      when "—" then "--"
-      when "“" then '"'
-      when "”" then '"'
-      when "‘" then "'"
-      when "’" then "'"
-      when "…" then "..."
-      else
-        char
       end
     end
 
@@ -119,7 +120,7 @@ class Double::Space::Paragraph
   end
   class HtmlParagraph < Double::Space::Paragraph
 
-    def initialize(lines)
+    def initialize(lines, ascii: false)
       in_emph = false
       @lines = lines.map { |line|
         line.chars.map { |char|
@@ -132,7 +133,11 @@ class Double::Space::Paragraph
               "<em>"
             end
           else
-            char
+            if ascii
+              asciify(char)
+            else
+              char
+            end
           end
         }.join("")
       }

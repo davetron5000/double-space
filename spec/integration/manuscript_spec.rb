@@ -98,7 +98,7 @@ RSpec.describe "Generate Manuscript" do
       contents = File.read("story.html").split(/\n/)
 
       expect(contents).not_to include_line_containing(%{Exposition})
-      expect(contents).to include_line_containing(%{>It was a dark and stormy night; the rain fell in torrents — except at occasional intervals, when it was checked by a violent gust of wind which swept up the streets (for it is in <em>London</em> that our scene lies), rattling along the housetops, and fiercely agitating the scanty flame of the lamps that struggled against the darkness.</p>})
+      expect(contents).to include_line_containing(%{>It was a dark and stormy night; the rain fell in torrents -- except at occasional intervals, when it was checked by a violent gust of wind which swept up the streets (for it is in <em>London</em> that our scene lies), rattling along the housetops, and fiercely agitating the scanty flame of the lamps that struggled against the darkness.</p>})
       expect(contents).to include_line_containing(%{>Through one of the obscurest quarters of London, and among haunts little loved by the gentlemen of the police, a man evidently of the lowest orders was wending his solitary way.</p>})
       expect(contents).not_to include_line_containing(%{<li><strong>Who wants what from whom?</strong> Guy walking wants to find the cops</li>})
       expect(contents).not_to include_line_containing(%{<li><strong>What happens if they don't get it?</strong> Some bad shit will go down</li>})

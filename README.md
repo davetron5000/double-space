@@ -57,6 +57,9 @@ Shane refuses to back off
 Shane has a lot to lose
 ```
 
+If your scene constitutes a large break in the action you should make the first line after the front matter `***`
+which will make sure there is a typographic scene break.
+
 To render the entire store us `ds`.  `ds` has three main modes:
 
 * `ds` - creates `story.html` in the current directory which will render a typographically present HTML version of the story, with scenes annotated, along with the questions/answers and notes.
